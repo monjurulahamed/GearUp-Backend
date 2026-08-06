@@ -24,7 +24,7 @@ export const seedSuperAdmin = async () => {
           status: "ACTIVE",
         },
       });
-      console.log(`👑 Super Admin seeded — ${envVars.SUPER_ADMIN_EMAIL}`);
+      console.log(`Super Admin seeded — ${envVars.SUPER_ADMIN_EMAIL}`);
       return;
     }
 

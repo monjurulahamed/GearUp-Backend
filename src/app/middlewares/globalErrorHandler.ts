@@ -7,20 +7,7 @@ import { AppError } from "../errorHelpers/AppError";
 import { handlePrismaError } from "../helpers/handlePrismaError";
 import { handleZodError } from "../helpers/handleZodError";
 
-/**
- * Global error handler — last middleware in the chain.
- * Converts every error into a structured JSON response:
- * {
- *   success: false,
- *   statusCode,
- *   message,
- *   errorSources?,   // for validation errors (list of { path, message })
- *   errorDetails?,   // for Prisma errors (extra context)
- *   err?,            // raw error name/string (non-operational)
- *   stack?           // only in development
- * }
- */
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
+
 export const globalErrorHandler = (
   err: any,
   req: Request,
