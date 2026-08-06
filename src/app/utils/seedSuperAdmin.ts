@@ -41,7 +41,7 @@ export const seedSuperAdmin = async () => {
           status: "ACTIVE",
         },
       });
-      console.log(`👑 Super Admin updated — ${envVars.SUPER_ADMIN_EMAIL}`);
+      console.log(`Super Admin updated — ${envVars.SUPER_ADMIN_EMAIL}`);
     }
   } catch (err) {
     console.error("Failed to seed super admin:", err);

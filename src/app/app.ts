@@ -25,7 +25,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 app.get("/", (req: Request, res: Response) => {
-  prisma.
+
   res.status(200).json({
     success: true,
     message: "servet is running",
