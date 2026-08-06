@@ -3,7 +3,7 @@ import * as z from "zod";
 export const registerZodSchema = z.object({
   body: z.object({
     name: z
-      .string({ required_error: "Name is required" })
+      .string({ re: "Name is required" })
       .min(2, "Name must be at least 2 characters")
       .max(50, "Name cannot exceed 50 characters"),
     email: z 
@@ -45,7 +45,7 @@ export const updateProfileZodSchema = z.object({
 
       name: z.string().min(2).max(50).optional(),
       phone: z.string().optional(),
-      
+
       address: z.string().optional(),
     })
     .strict(),
