@@ -1,11 +1,10 @@
 import { ZodError } from "zod";
 
-/**
- * Maps a Zod validation error to { statusCode, message, errorSources }.
- */
+
 export const handleZodError = (
   err: ZodError
 ): {
+  
   statusCode: number;
   message: string;
   errorSources: { path: string; message: string }[];

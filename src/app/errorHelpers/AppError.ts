@@ -1,7 +1,5 @@
-/**
- * Custom application error class.
- * Used to throw structured errors that the global error handler understands.
- */
+
+
 export class AppError extends Error {
   public readonly statusCode: number;
   public readonly isOperational: boolean;

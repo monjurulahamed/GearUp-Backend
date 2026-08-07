@@ -17,7 +17,7 @@ const startServer = async () => {
 
     app.listen(envVars.PORT, () => {
       console.log(`server is listening on http://localhost:${envVars.PORT}`);
-      console.log(`API base: http://localhost:${envVars.PORT}/api/v1`);
+      console.log(`API base: http://localhost:${envVars.PORT}/api`);
     });
   } catch (error) {
     console.error(" Failed to start server:", error);
