@@ -1,7 +1,11 @@
 import { Router } from "express";
 import { RentalController } from "./rental.controller";
+
+
 import { validateRequest } from "../../middlewares/validateRequest";
+
 import { checkAuth } from "../../middlewares/checkAuth";
+
 import {
   createRentalZodSchema,
   updateOrderStatusZodSchema,
@@ -9,13 +13,15 @@ import {
 
 const router = Router();
 
-// ----- Customer -----
+
 router.post(
   "/",
   checkAuth("CUSTOMER"),
   validateRequest(createRentalZodSchema),
   RentalController.createOrder
 );
+
+
 router.get("/me", checkAuth("CUSTOMER"), RentalController.getMyOrders);
 router.get("/:id", checkAuth(), RentalController.getOrderById);
 router.patch(
@@ -24,12 +30,14 @@ router.patch(
   RentalController.cancelMyOrder
 );
 
-// ----- Provider -----
+
 router.get(
   "/provider/incoming",
   checkAuth("PROVIDER"),
   RentalController.getProviderOrders
 );
+
+
 router.patch(
   "/provider/:id/status",
   checkAuth("PROVIDER"),

@@ -7,10 +7,12 @@ export const createRentalZodSchema = z.object({
         (val) => !isNaN(Date.parse(val)),
         "Invalid startDate — must be ISO string"
       ),
+
       endDate: z.string({ required_error: "endDate is required" }).refine(
         (val) => !isNaN(Date.parse(val)),
         "Invalid endDate — must be ISO string"
       ),
+
       items: z
         .array(
           z.object({
@@ -28,7 +30,7 @@ export const createRentalZodSchema = z.object({
     .refine(
       (data) => new Date(data.endDate) >= new Date(data.startDate),
       "endDate must be on or after startDate"
-    )
+  )
     .refine(
       (data) => new Date(data.startDate) >= new Date(new Date().toDateString()),
       "startDate cannot be in the past"
@@ -37,8 +39,11 @@ export const createRentalZodSchema = z.object({
 
 export const updateOrderStatusZodSchema = z.object({
   body: z.object({
+
     status: z.enum(["CONFIRMED", "PICKED_UP", "RETURNED", "CANCELLED"], {
+
       required_error: "status is required",
     }),
-  }),
+  }
+),
 });
