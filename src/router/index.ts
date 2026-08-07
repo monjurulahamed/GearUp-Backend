@@ -4,6 +4,7 @@ import { UserRoutes } from "../app/modules/user/user.route";
 import path from "node:path";
 import { CategoryRoutes } from "../app/modules/category/category.route";
 import { GearRoutes } from "../app/modules/gear/gear.route";
+import { RentalRoutes } from "../app/modules/rental/rental.route";
 
 const router = Router();
 
@@ -23,6 +24,10 @@ const moduleRoutes = [
   {
     path:"/gear", 
     route:GearRoutes
+  },
+  {
+    path: "/rentals", 
+    route: RentalRoutes
   }
 
 ];
