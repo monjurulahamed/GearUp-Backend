@@ -1,11 +1,14 @@
 import { Router } from "express";
 import { AuthRoutes } from "../app/modules/auth/auth.route";
 import { UserRoutes } from "../app/modules/user/user.route";
+
 import path from "node:path";
 import { CategoryRoutes } from "../app/modules/category/category.route";
 import { GearRoutes } from "../app/modules/gear/gear.route";
+
 import { RentalRoutes } from "../app/modules/rental/rental.route";
 import { PaymentRoutes } from "../app/modules/payment/payment.route";
+import { ReviewRoutes } from "../app/modules/review/review.route";
 
 const router = Router();
 
@@ -34,7 +37,10 @@ const moduleRoutes = [
     path: "/payments", 
         route: PaymentRoutes
 
-  }
+  },
+  { path: "/reviews", 
+    route: ReviewRoutes 
+  },
 
 
 ];
