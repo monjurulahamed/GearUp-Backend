@@ -43,7 +43,7 @@ export const updateGearZodSchema = z.object({
 export const gearFilterZodSchema = z.object({
   query: z.object({
     search: z.string().optional(),
-    category: z.string().optional(), // category slug
+    category: z.string().optional(), 
     categoryId: z.string().optional(),
     brand: z.string().optional(),
     minPrice: z.string().optional(),

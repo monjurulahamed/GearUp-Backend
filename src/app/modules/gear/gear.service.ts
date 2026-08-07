@@ -1,5 +1,7 @@
 import { Prisma } from "@prisma/client";
+
 import { prisma } from "../../config/prisma";
+
 import { AppError } from "../../errorHelpers/AppError";
 import httpStatus from "http-status-codes";
 
@@ -131,7 +133,7 @@ const getAllGear = async (query: {
   if (query.availability) {
     where.availability = query.availability;
   } else {
-    // Default: only show available gear to public
+    
     where.availability = "AVAILABLE";
   }
 
@@ -170,9 +172,12 @@ const getGearById = async (id: string) => {
   const gear = await prisma.gearItem.findUnique({
     where: { id },
     include: {
+
       category: true,
+
       provider: { select: { id: true, name: true, email: true, phone: true } },
       reviews: {
+        
         include: {
           customer: { select: { id: true, name: true } },
         },
