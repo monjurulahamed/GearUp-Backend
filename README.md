@@ -414,6 +414,4 @@ npm run prisma:studio    # Open Prisma Studio (GUI for DB)
 
 ---
 
-## 📝 License
 
-MIT — free to use, modify, and distribute.
