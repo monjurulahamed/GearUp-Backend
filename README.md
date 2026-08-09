@@ -1,417 +1,311 @@
-# 🏋️ GearUp — Sports & Outdoor Gear Rental API
+# GearUp 🏋️ — Backend API
 
-> "Rent Sports & Outdoor Gear Instantly"
+**"Rent Sports & Outdoor Gear Instantly"**
 
-GearUp is a backend REST API for a sports & outdoor equipment rental marketplace. Customers browse gear, place rental orders, pay via Stripe, and leave reviews. Providers manage their gear inventory and fulfill rental orders. Admins oversee users, gear, rentals, and categories.
-
----
-
-## 📌 Tech Stack
-
-| Layer            | Technology                              |
-| ---------------- | --------------------------------------- |
-| Runtime          | Node.js (v18+)                          |
-| Language         | TypeScript                              |
-| Framework        | Express                                 |
-| Database         | PostgreSQL                              |
-| ORM              | Prisma                                  |
-| Auth             | JWT + bcryptjs                          |
-| Validation       | Zod                                     |
-| Payment Gateway  | Stripe (Checkout Sessions + Webhook)    |
-| Architecture     | Modular / layered (controller-service-route-validation) |
+GearUp is a RESTful backend API for a sports and outdoor equipment rental platform. Customers can browse gear, place rental orders, pay online, and leave reviews. Providers manage their own gear inventory and fulfill rental orders. Admins oversee the platform, manage users, and moderate listings.
 
 ---
 
-## 🚀 Quick Start
+## 🔗 Project Links
 
-### 1. Prerequisites
+| Item | Link |
+|---|---|
+| **Backend Repo** | https://github.com/monjurulahamed/GearUp-Backend |
+| **Live API** | `<add your deployed Vercel/Render URL here>` |
+| **API Documentation (Postman)** | `<add your published Postman collection link here>` (raw collection file: `GearUp-Backend.postman_collection.json`) |
+| **Demo Video (3–5 min)** | `<add your Loom / Google Drive link here>` |
+| **Admin Email** | `<add working admin email here>` |
+| **Admin Password** | `<add working admin password here>` |
 
-- Node.js v18 or later
-- PostgreSQL (local install **or** Neon / Supabase / Railway free tier)
-- Stripe account in **test mode** (for payment testing)
-- Postman (to import the collection and test endpoints)
+---
+
+## 🧩 Roles & Permissions
+
+| Role | Description | Key Permissions |
+|---|---|---|
+| **Customer** | Users who rent sports gear | Browse gear, place rental orders, pay online, track order status, leave reviews |
+| **Provider** | Gear vendors / rental shops | Manage gear inventory, view incoming orders, update order status |
+| **Admin** | Platform moderators | Manage all users, oversee all rentals, manage gear categories |
+
+> 💡 Users select their role during registration.
+
+---
+
+## ⚙️ Tech Stack
+
+| Layer | Technology |
+|---|---|
+| Runtime | Node.js |
+| Language | TypeScript |
+| Framework | Express 5 |
+| Database | PostgreSQL |
+| ORM | Prisma (`@prisma/client`, `@prisma/adapter-pg`) |
+| Authentication | JWT (`jsonwebtoken`) + `bcryptjs` for password hashing |
+| Validation | Zod |
+| Payment | Stripe |
+| Other | `cors`, `cookie-parser`, `dotenv`, `http-status-codes` |
+| Build tool | `tsup` / `tsc` |
+| Deployment | Vercel |
+
+---
+
+## ✨ Features
+
+### Public
+- Browse all available sports & outdoor gear
+- Search and filter gear by category, price, brand, and availability
+- View detailed gear specifications
+
+### Customer
+- Register and log in
+- Place rental orders (select gear, rental dates)
+- Pay securely via **Stripe** when placing/confirming an order
+- View payment history and payment status
+- Track rental order status (placed → confirmed → paid → picked up → returned)
+- Leave a review after returning gear
+- Manage profile
+
+### Provider
+- Register and log in
+- Add, edit, and remove gear from inventory
+- Manage stock and availability
+- View incoming rental orders
+- Update order status (confirm / mark picked up / mark returned)
+
+### Admin
+- View and manage all users (customers & providers)
+- Suspend / activate user accounts
+- View all gear listings and rental orders
+- Manage gear categories
+
+---
+
+## 🗂️ Project Structure
+
+```
+GearUp-Backend/
+├── prisma/                          # Prisma schema, migrations & seed script
+│   ├── schema.prisma
+│   └── seed.ts
+├── src/
+│   └── app/
+│       ├── server.ts                # Application entry point
+│       ├── app.ts                   # Express app configuration (middleware, routes)
+│       ├── config/                  # Environment & app configuration
+│       ├── middlewares/             # Auth guard, error handler, validators
+│       ├── errors/                  # Custom / structured error classes
+│       ├── modules/                 # Feature modules (route + controller + service)
+│       │   ├── auth/
+│       │   ├── user/
+│       │   ├── gear/
+│       │   ├── category/
+│       │   ├── rental/
+│       │   ├── payment/
+│       │   ├── review/
+│       │   └── admin/
+│       └── utils/                   # Shared helpers (JWT, response formatter, etc.)
+├── dist/                            # Compiled JavaScript output (build)
+├── GearUp-Backend.postman_collection.json
+├── prisma.config.ts
+├── tsup.config.ts
+├── tsconfig.json
+├── vercel.json
+└── package.json
+```
+
+> ℹ️ Update this tree if your actual module names/folders differ.
+
+---
+
+## 🚀 Getting Started
+
+### Prerequisites
+- Node.js (v18+ recommended)
+- PostgreSQL database
+- A Stripe account (test mode keys are fine for development)
+
+### 1. Clone the repository
+```bash
+git clone https://github.com/monjurulahamed/GearUp-Backend.git
+cd GearUp-Backend
+```
 
 ### 2. Install dependencies
-
 ```bash
 npm install
 ```
 
-### 3. Configure environment
+### 3. Configure environment variables
+Create a `.env` file in the project root:
 
-Copy `.env.example` to `.env` and fill in real values:
+```env
+# Server
+PORT=5000
+NODE_ENV=development
 
-```bash
-cp .env.example .env
+# Database
+DATABASE_URL="postgresql://<user>:<password>@<host>:<port>/<database>?schema=public"
+
+# JWT
+JWT_ACCESS_SECRET=<your_access_token_secret>
+JWT_REFRESH_SECRET=<your_refresh_token_secret>
+JWT_ACCESS_EXPIRES_IN=1d
+JWT_REFRESH_EXPIRES_IN=30d
+
+# Bcrypt
+BCRYPT_SALT_ROUNDS=12
+
+# Stripe
+STRIPE_SECRET_KEY=<your_stripe_secret_key>
+STRIPE_WEBHOOK_SECRET=<your_stripe_webhook_secret>
+
+# CORS
+CLIENT_URL=http://localhost:3000
 ```
 
-Required keys:
-
-| Variable                  | Description                                                                |
-| ------------------------- | -------------------------------------------------------------------------- |
-| `PORT`                    | Server port (default `5000`)                                               |
-| `DATABASE_URL`            | Postgres connection string                                                 |
-| `NODE_ENV`                | `development` or `production`                                              |
-| `JWT_ACCESS_SECRET`       | Random long string used to sign JWT tokens                                 |
-| `JWT_ACCESS_EXPIRES`      | Token lifetime (`10d`, `7d`, `1h` etc.)                                    |
-| `BCRYPT_SALT_ROUND`       | Bcrypt cost factor (recommended `12`)                                      |
-| `SUPER_ADMIN_EMAIL`       | Auto-seeded admin email                                                    |
-| `SUPER_ADMIN_PASSWORD`    | Auto-seeded admin password                                                 |
-| `FRONTEND_URL`            | Frontend URL (for Stripe redirect URLs)                                    |
-| `STRIPE_SECRET_KEY`       | Stripe test secret key (`sk_test_...`)                                     |
-| `STRIPE_WEBHOOK_SECRET`   | Stripe webhook signing secret (`whsec_...`)                                |
-
-### 4. Initialize the database
-
+### 4. Set up the database
 ```bash
-# Generate Prisma Client
-npm run prisma:generate
-
-# Run the initial migration (creates all tables)
-npm run prisma:migrate
-
-# (Optional) Seed demo data — admin, demo provider/customer, categories, sample gear
-npm run prisma:seed
+npm run prisma:generate     # generate Prisma client
+npm run prisma:migrate      # run migrations
+npm run prisma:seed         # seed initial data (e.g. admin user, categories)
 ```
 
-### 5. Start the server
+### 5. Run the app
 
 ```bash
-# Development (with hot-reload via ts-node-dev)
+# Development (hot reload)
 npm run dev
 
-# Production
+# Production build
 npm run build
 npm start
 ```
 
-Server listens on `http://localhost:5000`. API base URL: `http://localhost:5000/api/v1`.
+The API will be available at `http://localhost:5000` (or your configured `PORT`).
 
----
-
-## 👑 Admin Credentials
-
-These are auto-seeded on every server boot (from `.env`):
-
-```
-Email:    admin@gearup.com
-Password: Admin@12345
-```
-
-> ⚠️ Change these in `.env` (`SUPER_ADMIN_EMAIL` / `SUPER_ADMIN_PASSWORD`) before deploying to production.
-
-### Demo accounts (seeded by `npm run prisma:seed`)
-
-| Role     | Email                  | Password        |
-| -------- | ---------------------- | --------------- |
-| Admin    | admin@gearup.com       | `Admin@12345`   |
-| Provider | provider@gearup.com    | `Provider@123`  |
-| Customer | customer@gearup.com    | `Customer@123`  |
-
----
-
-## 📂 Project Structure
-
-```
-gearup-backend/
-├── prisma/
-│   ├── schema.prisma              # Database schema (7 models + 6 enums)
-│   ├── seed.ts                    # Seeds admin + demo data
-│   └── migrations/                # Generated by Prisma migrate
-├── postman/
-│   └── GearUp.postman_collection.json
-├── src/
-│   ├── app/
-│   │   ├── config/                # env.ts, prisma.ts (singleton)
-│   │   ├── errorHelpers/          # AppError
-│   │   ├── helpers/               # handlePrismaError, handleZodError
-│   │   ├── interfaces/            # shared types + Express augmentation
-│   │   ├── middlewares/           # checkAuth, validateRequest, globalErrorHandler, notFound
-│   │   ├── modules/
-│   │   │   ├── auth/              # register, login, me
-│   │   │   ├── user/              # profile update
-│   │   │   ├── category/          # admin CRUD + public list
-│   │   │   ├── gear/              # provider CRUD + public browse/filter
-│   │   │   ├── rental/            # order create, list, status flow
-│   │   │   ├── payment/           # Stripe checkout + webhook + history
-│   │   │   ├── review/            # create review (after RETURNED)
-│   │   │   └── admin/             # users/gear/rentals/payments management
-│   │   ├── routes/                # central router
-│   │   └── utils/                 # catchAsync, sendResponse, jwt, seedSuperAdmin
-│   ├── app.ts                     # express app config (CORS, body parsers, webhook route)
-│   └── server.ts                  # entry point (DB connect + listen)
-├── .env / .env.example
-├── .gitignore
-├── eslint.config.mjs
-├── package.json
-├── tsconfig.json
-└── README.md
-```
-
----
-
-## 🔐 Authentication & Roles
-
-Users select their role (`CUSTOMER` or `PROVIDER`) at registration. `ADMIN` cannot self-register — it's seeded automatically.
-
-| Role     | Capabilities                                                                            |
-| -------- | --------------------------------------------------------------------------------------- |
-| CUSTOMER | Browse gear, place rental orders, pay via Stripe, cancel pre-payment, leave reviews    |
-| PROVIDER | Add/edit/remove own gear, view incoming orders, update order status                    |
-| ADMIN    | List/suspend/activate all users, view all gear/rentals/payments, manage categories     |
-
-All protected endpoints require header: `Authorization: Bearer <token>`.
-
----
-
-## 📊 Rental Order Status Flow
-
-```
-                ┌──────────┐
-                │  PLACED  │  ← customer creates order
-                └──────────┘
-                  /        \
-        (provider)        (customer)
-         confirms          cancels
-            /                  \
-           ▼                    ▼
-    ┌───────────┐         ┌───────────┐
-    │ CONFIRMED │         │ CANCELLED │
-    └───────────┘         └───────────┘
-            │
-            ▼
-    ┌───────────┐
-    │    PAID   │  ← Stripe webhook marks payment COMPLETED + order PAID
-    └───────────┘
-            │
-            ▼
-    ┌────────────┐
-    │ PICKED_UP  │  ← provider hands over the gear
-    └────────────┘
-            │
-            ▼
-    ┌───────────┐
-    │ RETURNED  │  ← provider receives gear back; review now allowed
-    └───────────┘
-```
-
-Allowed transitions are validated server-side (`assertValidTransition` in `rental.service.ts`).
-
----
-
-## 💳 Payment Integration (Stripe)
-
-The flow:
-
-1. Customer creates a rental order (`POST /api/v1/rentals`) → order is `PLACED`.
-2. Provider confirms (`PATCH /api/v1/rentals/provider/:id/status` with `status: "CONFIRMED"`).
-3. Customer calls `POST /api/v1/payments/create` with `rentalOrderId` → API returns a Stripe Checkout URL.
-4. Customer is redirected to Stripe's hosted checkout page.
-5. On successful payment, Stripe fires a webhook to `POST /api/v1/payments/webhook`:
-   - Payment row is updated to `COMPLETED` with `paidAt` timestamp.
-   - Rental order is moved to `PAID` status.
-6. Provider then marks the order `PICKED_UP` → `RETURNED`.
-
-### Testing the webhook locally
-
-Use Stripe CLI to forward events to your local server:
-
+### Other useful scripts
 ```bash
-# Install Stripe CLI: https://stripe.com/docs/stripe-cli
-stripe listen --forward-to localhost:5000/api/v1/payments/webhook
+npm run lint             # lint the src folder
+npm run prisma:studio    # open Prisma Studio to inspect data
 ```
-
-The CLI prints a `whsec_...` value — set it as `STRIPE_WEBHOOK_SECRET` in your `.env`.
-
-> ⚠️ **The webhook route uses `express.raw()` (registered BEFORE `express.json()`) so Stripe can verify the request signature.** See `src/app.ts`.
-
-Use Stripe's test card: `4242 4242 4242 4242`, any future expiry, any CVC.
 
 ---
 
 ## 📡 API Endpoints
 
-Base URL: `/api/v1`
+> ⚠️ These reflect the assignment spec — adjust to match your actual implemented routes.
 
-### Auth
+### Authentication
+| Method | Endpoint | Description |
+|---|---|---|
+| POST | `/api/auth/register` | Register new user (customer/provider) |
+| POST | `/api/auth/login` | Login user, return JWT |
+| GET | `/api/auth/me` | Get current authenticated user |
 
-| Method | Endpoint         | Description                          | Auth     |
-| ------ | ---------------- | ------------------------------------ | -------- |
-| POST   | `/auth/register` | Register as CUSTOMER or PROVIDER     | Public   |
-| POST   | `/auth/login`    | Login and receive JWT token          | Public   |
-| GET    | `/auth/me`       | Get current authenticated user       | Any      |
+### Gear (Public)
+| Method | Endpoint | Description |
+|---|---|---|
+| GET | `/api/gear` | Get all gear with filters (category, price, brand) |
+| GET | `/api/gear/:id` | Get gear details |
+| GET | `/api/categories` | Get all gear categories |
 
-### Users
+### Rental Orders
+| Method | Endpoint | Description |
+|---|---|---|
+| POST | `/api/rentals` | Create new rental order |
+| GET | `/api/rentals` | Get logged-in user's rental orders |
+| GET | `/api/rentals/:id` | Get rental order details |
 
-| Method | Endpoint     | Description                  | Auth     |
-| ------ | ------------ | ---------------------------- | -------- |
-| PATCH  | `/users/me`  | Update own profile           | Any      |
+### Payments (Stripe)
+| Method | Endpoint | Description |
+|---|---|---|
+| POST | `/api/payments/create` | Create a payment intent/session for a rental order |
+| POST | `/api/payments/confirm` | Confirm/verify payment (webhook or callback) |
+| GET | `/api/payments` | Get user's payment history |
+| GET | `/api/payments/:id` | Get payment details |
 
-### Categories
-
-| Method | Endpoint            | Description                | Auth   |
-| ------ | ------------------- | -------------------------- | ------ |
-| GET    | `/categories`       | List all categories        | Public |
-| GET    | `/categories/:id`   | Get category by ID         | Public |
-| POST   | `/categories`       | Create category            | ADMIN  |
-| PATCH  | `/categories/:id`   | Update category            | ADMIN  |
-| DELETE | `/categories/:id`   | Delete category            | ADMIN  |
-
-### Gear
-
-| Method | Endpoint                  | Description                                          | Auth     |
-| ------ | ------------------------- | ---------------------------------------------------- | -------- |
-| GET    | `/gear`                   | Browse gear with filters (search, category, price, brand, availability, sortBy, pagination) | Public |
-| GET    | `/gear/:id`               | Get gear details (with provider info + reviews)      | Public   |
-| POST   | `/gear/provider`          | Add gear to inventory                                | PROVIDER |
-| GET    | `/gear/provider/me`       | List own gear                                        | PROVIDER |
-| PUT    | `/gear/provider/:id`      | Update own gear                                      | PROVIDER |
-| DELETE | `/gear/provider/:id`      | Remove own gear                                      | PROVIDER |
-
-### Rentals
-
-| Method | Endpoint                              | Description                                       | Auth     |
-| ------ | ------------------------------------- | ------------------------------------------------- | -------- |
-| POST   | `/rentals`                            | Create rental order (customer)                    | CUSTOMER |
-| GET    | `/rentals/me`                         | List customer's orders                            | CUSTOMER |
-| GET    | `/rentals/:id`                        | Get order by ID (with authz check)                | Any      |
-| PATCH  | `/rentals/:id/cancel`                 | Cancel own order (before PAID)                    | CUSTOMER |
-| GET    | `/rentals/provider/incoming`          | List provider's incoming orders                   | PROVIDER |
-| PATCH  | `/rentals/provider/:id/status`        | Update order status (CONFIRMED / PICKED_UP / RETURNED) | PROVIDER |
-
-### Payments
-
-| Method | Endpoint              | Description                                  | Auth     |
-| ------ | --------------------- | -------------------------------------------- | -------- |
-| POST   | `/payments/create`    | Create Stripe Checkout session               | CUSTOMER |
-| POST   | `/payments/webhook`   | Stripe webhook (raw body)                    | Public   |
-| GET    | `/payments`           | List user's payment history                  | Any      |
-| GET    | `/payments/:id`       | Get payment by ID (with authz check)         | Any      |
+### Provider Management
+| Method | Endpoint | Description |
+|---|---|---|
+| POST | `/api/provider/gear` | Add gear to inventory |
+| PUT | `/api/provider/gear/:id` | Update gear listing |
+| DELETE | `/api/provider/gear/:id` | Remove gear from inventory |
+| GET | `/api/provider/orders` | Get provider's incoming orders |
+| PATCH | `/api/provider/orders/:id` | Update rental order status |
 
 ### Reviews
-
-| Method | Endpoint                  | Description                                            | Auth     |
-| ------ | ------------------------- | ------------------------------------------------------ | -------- |
-| POST   | `/reviews`                | Create review (only after RETURNED rental)             | CUSTOMER |
-| GET    | `/reviews/gear/:gearId`   | List reviews + average rating for a gear item          | Public   |
+| Method | Endpoint | Description |
+|---|---|---|
+| POST | `/api/reviews` | Create review (after rental return) |
 
 ### Admin
-
-| Method | Endpoint                  | Description                                       | Auth |
-| ------ | ------------------------- | ------------------------------------------------- | ---- |
-| GET    | `/admin/users`            | List all users                                    | ADMIN |
-| PATCH  | `/admin/users/:id`        | Suspend / activate a user                         | ADMIN |
-| GET    | `/admin/gear`             | List all gear listings                            | ADMIN |
-| GET    | `/admin/rentals`          | List all rental orders                            | ADMIN |
-| GET    | `/admin/payments`         | List all payments                                 | ADMIN |
-| GET    | `/admin/stats`            | Dashboard summary (counts, revenue, status split) | ADMIN |
+| Method | Endpoint | Description |
+|---|---|---|
+| GET | `/api/admin/users` | Get all users |
+| PATCH | `/api/admin/users/:id` | Update user status (suspend/activate) |
+| GET | `/api/admin/gear` | Get all gear listings |
+| GET | `/api/admin/rentals` | Get all rental orders |
 
 ---
 
-## 📦 Response Format
+## 🗄️ Database Models
 
-### Success
-
-```json
-{
-  "success": true,
-  "statusCode": 200,
-  "message": "Gear list retrieved successfully",
-  "data": [ { "id": "...", "name": "..." } ],
-  "meta": { "page": 1, "limit": 20, "total": 50, "totalPage": 3 }
-}
-```
-
-### Error (consistent across ALL endpoints)
-
-```json
-{
-  "success": false,
-  "statusCode": 400,
-  "message": "Validation error",
-  "errorSources": [
-    { "path": "body.password", "message": "Password must contain at least 1 uppercase letter" }
-  ]
-}
-```
-
-For Prisma errors (duplicate, not found):
-
-```json
-{
-  "success": false,
-  "statusCode": 409,
-  "message": "Duplicate value — a record with this email already exists.",
-  "errorDetails": { "field": ["email"] }
-}
-```
-
-In development, error responses also include a `stack` field.
+| Model | Description |
+|---|---|
+| **User** | Stores user info, credentials (hashed password), and role (`CUSTOMER`, `PROVIDER`, `ADMIN`) |
+| **GearItem** | Sports/outdoor gear listings, linked to a provider |
+| **Category** | Gear categories (cycling, camping, fitness, water sports, etc.) |
+| **RentalOrder** | Rental orders with items, dates, and status |
+| **Payment** | Payment transactions — `transactionId`, `rentalOrderId`, `amount`, `method`, `provider` (Stripe), `status` (`PENDING`/`COMPLETED`/`FAILED`), `paidAt` |
+| **Review** | Customer reviews for gear items after return |
 
 ---
 
-## 🗄️ Database Schema
+## 📮 API Documentation & Testing
 
-7 models with full relations (see `prisma/schema.prisma`):
+A Postman collection is included in the repo:
+[`GearUp-Backend.postman_collection.json`](./GearUp-Backend.postman_collection.json)
 
-| Model              | Description                                              |
-| ------------------ | ------------------------------------------------------- |
-| `User`             | Auth, role (CUSTOMER / PROVIDER / ADMIN), status        |
-| `Category`         | Gear categories (cycling, camping, fitness, etc.)       |
-| `GearItem`         | Gear listings (linked to provider + category)           |
-| `RentalOrder`      | Customer rental order (dates, status, total amount)     |
-| `RentalOrderItem`  | Join table — gear × quantity × price snapshot           |
-| `Payment`          | Stripe transaction record (status, paidAt, amount)      |
-| `Review`           | Customer review (1-5 rating) for a gear item            |
-
-Enums: `Role`, `UserStatus`, `RentalStatus`, `PaymentMethod`, `PaymentStatus`, `GearAvailability`.
-
-Key constraints:
-- Unique on `User.email`
-- Unique on `Category.slug`
-- Unique on `Payment.transactionId` + `Payment.rentalOrderId` (1:1)
-- Unique on `(customerId, gearItemId)` in `Review` — one review per customer per gear
-- Cascade deletes: provider deletion deletes their gear; rental order deletion deletes its items
+To use it:
+1. Open Postman → **Import** → select the JSON file.
+2. Set a collection variable `baseUrl` to your local (`http://localhost:5000`) or deployed API URL.
+3. Run **Register/Login** first to obtain a JWT, then use it for protected routes.
 
 ---
 
-## ✅ Mandatory Requirements Checklist
+## ✅ Assignment Mandatory Requirements Checklist
 
-| Requirement                   | Status | Where                                                            |
-| ----------------------------- | ------ | ---------------------------------------------------------------- |
-| API Documentation             | ✅     | `postman/GearUp.postman_collection.json` (covers all endpoints) |
-| Consistent Error Responses    | ✅     | `src/app/middlewares/globalErrorHandler.ts`                     |
-| 20+ Commits                   | ✅     | `git log --oneline`                                              |
-| Input Validation              | ✅     | Zod schemas in every `*.validation.ts` + `validateRequest` mw   |
-| Admin Credentials             | ✅     | Seeded from env — `admin@gearup.com` / `Admin@12345`            |
-| Payment Integration (Stripe)  | ✅     | `src/app/modules/payment/` — real Stripe Checkout + webhook     |
+- [ ] API Documentation (Postman collection included / Swagger)
+- [ ] Consistent structured error responses: `{ success, message, errorDetails }`
+- [ ] 20+ meaningful backend commits with descriptive messages
+- [ ] Server-side input validation (Zod) on all endpoints
+- [ ] Working admin credentials provided
+- [ ] Payment integration via Stripe (no fake/COD payments)
 
 ---
 
-## 🧪 Testing in Postman
+## ☁️ Deployment
 
-1. Import `postman/GearUp.postman_collection.json` into Postman.
-2. Set the `baseUrl` collection variable (default: `http://localhost:5000/api/v1`).
-3. Run **Login Admin** → `adminToken` is auto-saved.
-4. Run **Login Provider** → `providerToken` is auto-saved.
-5. Run **Login Customer** → `token` is auto-saved.
-6. The collection is organized by module: Auth, User, Categories, Gear, Rentals, Payments, Reviews, Admin.
-
----
-
-## 🛠️ Useful Scripts
+This project is configured for deployment on **Vercel** (see `vercel.json`).
 
 ```bash
-npm run dev              # Dev server with hot reload
-npm run build            # Compile TS → dist/
-npm start                # Run compiled server
-npm run lint             # ESLint check
-npm run prisma:generate  # Regenerate Prisma Client after schema changes
-npm run prisma:migrate   # Create + apply a new migration
-npm run prisma:seed      # Seed demo data
-npm run prisma:studio    # Open Prisma Studio (GUI for DB)
+npm run build
 ```
+
+Set the same environment variables listed above in your hosting provider's dashboard before deploying.
 
 ---
 
+## 🎥 Video Walkthrough
+
+`<add your 3–5 minute Loom/Drive demo link here, covering: architecture overview, all 3 roles via Postman, CRUD operations, error handling, and one technical challenge you solved>`
+
+---
+
+## 👤 Author
+
+**Monjurul Ahamed**
+GitHub: [@monjurulahamed](https://github.com/monjurulahamed)
+
+---
 
