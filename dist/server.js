@@ -3,10 +3,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const app_1 = __importDefault(require("./app"));
-const env_1 = require("./config/env");
-const prisma_1 = require("./config/prisma");
-const seedSuperAdmin_1 = require("./utils/seedSuperAdmin");
+const app_1 = __importDefault(require("./app/app"));
+const env_1 = require("./app/config/env");
+const prisma_1 = require("./app/config/prisma");
+const seedSuperAdmin_1 = require("./app/utils/seedSuperAdmin");
 const startServer = async () => {
     try {
         await prisma_1.prisma.$connect();
@@ -18,12 +18,10 @@ const startServer = async () => {
         });
     }
     catch (error) {
-        console.error("Failed to start server:", error);
+        console.error(" Failed to start server:", error);
         process.exit(1);
     }
 };
-if (process.env.VERCEL !== "1") {
-    startServer();
-}
+startServer();
 exports.default = app_1.default;
 //# sourceMappingURL=server.js.map
