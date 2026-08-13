@@ -13,7 +13,7 @@ GearUp is a RESTful backend API for a sports and outdoor equipment rental platfo
 |---|---|
 | **Backend Repo** |[REPOSITORIES](https://github.com/monjurulahamed/GearUp-Backend)|
 | **Live API** |[Deployed Vercel URL](https://gear-up-backend-coral.vercel.app/)|
-| **API Documentation (Postman)** |[GearUp-Backend.postman_collection.json](https://monjurulahamed2244-2334817.postman.co/workspace/1c2ed1e7-27b9-4da5-8930-00a6f9b6edf1/collection/54918163-16411d3c-1c2f-4fad-8463-b691d468826a?action=share&source=copy-link&creator=54918163) |
+| **API Documentation (Postman)** |[GearUp-Backend.postman_collection.json](https://documenter.getpostman.com/view/54918163/2sBYApxsnM) |
 | **Demo Video (3–5 min)** |[Demo Video](https://drive.google.com/file/d/1y_DRTl6gXmoYovSJgiMWxjBzIm2gW-eK/view?usp=sharing) |
 | **Admin Email** |admin@gearup.com |
 | **Admin Password** |Admin@12345 |
@@ -296,10 +296,6 @@ npm run build
 Set the same environment variables listed above in your hosting provider's dashboard before deploying.
 
 ---
-
-## 🎥 Video Walkthrough
-
-`<add your 3–5 minute Loom/Drive demo link here, covering: architecture overview, all 3 roles via Postman, CRUD operations, error handling, and one technical challenge you solved>`
 
 ---
 
