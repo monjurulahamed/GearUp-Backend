@@ -10,7 +10,7 @@ model User {
   createdAt    DateTime      @default(now())
   updatedAt    DateTime      @updatedAt
 
-  // Relations
+
   gearItems    GearItem[]    @relation("ProviderGear")
   rentalOrders RentalOrder[] @relation("CustomerRentals")
   reviews      Review[]
