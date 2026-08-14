@@ -3,12 +3,6 @@
 
 **"Rent Sports & Outdoor Gear Instantly"**
 
-=======
-
-# GearUp 🏋️ — Backend API
-
-**"Rent Sports & Outdoor Gear Instantly"**
-
 GearUp is a RESTful backend API for a sports and outdoor equipment rental platform. Customers can browse gear, place rental orders, pay online, and leave reviews. Providers manage their own gear inventory and fulfill rental orders. Admins oversee the platform, manage users, and moderate listings.
 
 ---
