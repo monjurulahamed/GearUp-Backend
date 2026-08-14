@@ -305,7 +305,3 @@ Set the same environment variables listed above in your hosting provider's dashb
 GitHub: [@monjurulahamed](https://github.com/monjurulahamed)
 
 ---
-
-## 📄 License
-
-This project is licensed under the **ISC License**.
