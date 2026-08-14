@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 # GearUp 🏋️ — Backend API
 
 **"Rent Sports & Outdoor Gear Instantly"**
@@ -9,7 +9,6 @@
 
 **"Rent Sports & Outdoor Gear Instantly"**
 
->>>>>>> 14f46739b307c219dfbf3c0e9392b728fd12c739
 GearUp is a RESTful backend API for a sports and outdoor equipment rental platform. Customers can browse gear, place rental orders, pay online, and leave reviews. Providers manage their own gear inventory and fulfill rental orders. Admins oversee the platform, manage users, and moderate listings.
 
 ---
@@ -32,7 +31,7 @@ GearUp is a RESTful backend API for a sports and outdoor equipment rental platfo
 | **Demo Video (3–5 min)** |[Demo Video](https://drive.google.com/file/d/1y_DRTl6gXmoYovSJgiMWxjBzIm2gW-eK/view?usp=sharing) |
 | **Admin Email** |admin@gearup.com |
 | **Admin Password** |Admin@12345 |
->>>>>>> 14f46739b307c219dfbf3c0e9392b728fd12c739
+
 
 ---
 
@@ -313,25 +312,9 @@ Set the same environment variables listed above in your hosting provider's dashb
 
 ---
 
-<<<<<<< HEAD
-## 🎥 Video Walkthrough
-
-`<add your 3–5 minute Loom/Drive demo link here, covering: architecture overview, all 3 roles via Postman, CRUD operations, error handling, and one technical challenge you solved>`
-
----
 
 ## 👤 Author
 
 **Monjurul Ahamed**
 GitHub: [@monjurulahamed](https://github.com/monjurulahamed)
 
-=======
->>>>>>> 14f46739b307c219dfbf3c0e9392b728fd12c739
----
-
-## 👤 Author
-
-**Monjurul Ahamed**
-GitHub: [@monjurulahamed](https://github.com/monjurulahamed)
-
----
