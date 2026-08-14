@@ -11,14 +11,6 @@ GearUp is a RESTful backend API for a sports and outdoor equipment rental platfo
 
 | Item | Link |
 |---|---|
-<<<<<<< HEAD
-| **Backend Repo** | https://github.com/monjurulahamed/GearUp-Backend |
-| **Live API** | `<add your deployed Vercel/Render URL here>` |
-| **API Documentation (Postman)** | `<add your published Postman collection link here>` (raw collection file: `GearUp-Backend.postman_collection.json`) |
-| **Demo Video (3–5 min)** | `<add your Loom / Google Drive link here>` |
-| **Admin Email** | `<add working admin email here>` |
-| **Admin Password** | `<add working admin password here>` |
-=======
 | **Backend Repo** |[REPOSITORIES](https://github.com/monjurulahamed/GearUp-Backend)|
 | **Live API** |[Deployed Vercel URL](https://gear-up-backend-coral.vercel.app/)|
 | **API Documentation (Postman)** |[GearUp-Backend.postman_collection.json](https://documenter.getpostman.com/view/54918163/2sBYApxsnM) |
