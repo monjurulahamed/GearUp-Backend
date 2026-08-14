@@ -1,6 +1,14 @@
+
 # GearUp 🏋️ — Backend API
 
 **"Rent Sports & Outdoor Gear Instantly"**
+
+=======
+
+# GearUp 🏋️ — Backend API
+
+**"Rent Sports & Outdoor Gear Instantly"**
+
 
 GearUp is a RESTful backend API for a sports and outdoor equipment rental platform. Customers can browse gear, place rental orders, pay online, and leave reviews. Providers manage their own gear inventory and fulfill rental orders. Admins oversee the platform, manage users, and moderate listings.
 
@@ -10,12 +18,21 @@ GearUp is a RESTful backend API for a sports and outdoor equipment rental platfo
 
 | Item | Link |
 |---|---|
+
 | **Backend Repo** | https://github.com/monjurulahamed/GearUp-Backend |
 | **Live API** | `<add your deployed Vercel/Render URL here>` |
 | **API Documentation (Postman)** | `<add your published Postman collection link here>` (raw collection file: `GearUp-Backend.postman_collection.json`) |
 | **Demo Video (3–5 min)** | `<add your Loom / Google Drive link here>` |
 | **Admin Email** | `<add working admin email here>` |
 | **Admin Password** | `<add working admin password here>` |
+=======
+| **Backend Repo** |[REPOSITORIES](https://github.com/monjurulahamed/GearUp-Backend)|
+| **Live API** |[Deployed Vercel URL](https://gear-up-backend-coral.vercel.app/)|
+| **API Documentation (Postman)** |[GearUp-Backend.postman_collection.json](https://documenter.getpostman.com/view/54918163/2sBYApxsnM) |
+| **Demo Video (3–5 min)** |[Demo Video](https://drive.google.com/file/d/1y_DRTl6gXmoYovSJgiMWxjBzIm2gW-eK/view?usp=sharing) |
+| **Admin Email** |admin@gearup.com |
+| **Admin Password** |Admin@12345 |
+
 
 ---
 
@@ -296,9 +313,13 @@ Set the same environment variables listed above in your hosting provider's dashb
 
 ---
 
-## 🎥 Video Walkthrough
 
-`<add your 3–5 minute Loom/Drive demo link here, covering: architecture overview, all 3 roles via Postman, CRUD operations, error handling, and one technical challenge you solved>`
+
+## 👤 Author
+
+**Monjurul Ahamed**
+GitHub: [@monjurulahamed](https://github.com/monjurulahamed)
+
 
 ---
 
@@ -308,4 +329,3 @@ Set the same environment variables listed above in your hosting provider's dashb
 GitHub: [@monjurulahamed](https://github.com/monjurulahamed)
 
 ---
-
